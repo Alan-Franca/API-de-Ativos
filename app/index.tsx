@@ -20,10 +20,6 @@ type AssetSection = {
 const BRAPI_API_TOKEN = process.env.EXPO_PUBLIC_BRAPI_API_TOKEN;
 const BRAPI_BASE_URL = "https://brapi.dev/api";
 
-/**
- * Busca a lista completa de ativos com todos os dados necessários (incluindo logo).
- * Esta função é chamada apenas uma vez para criar o cache local.
- */
 const fetchFullAssetsList = async (): Promise<Asset[]> => {
   try {
     const response = await axios.get(`${BRAPI_BASE_URL}/quote/list`, {
@@ -36,7 +32,7 @@ const fetchFullAssetsList = async (): Promise<Asset[]> => {
         price: asset.close,
         logo: asset.logo,
         type: asset.stock.endsWith("11") ? "FII" : "Ação",
-        dividendYield: 0, // Não é mais usado, mas mantido para o tipo
+        dividendYield: 0,
       }));
   } catch (error: any) {
     console.error("Erro ao buscar a lista de ativos:", error);
@@ -54,12 +50,9 @@ export default function CalculadoraScreen() {
   const [assetSections, setAssetSections] = useState<AssetSection[]>([]);
   const [wasCalculated, setWasCalculated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // Cache para armazenar a lista completa de ativos.
   const [fullAssetList, setFullAssetList] = useState<Asset[]>([]);
   const [isInitialLoading, setIsInitialLoading] = useState<boolean>(true);
 
-  // Busca os dados uma única vez ao iniciar o app.
   useEffect(() => {
     const loadInitialData = async () => {
       try {
@@ -74,7 +67,6 @@ export default function CalculadoraScreen() {
     loadInitialData();
   }, []);
 
-  // Filtra e organiza os ativos a partir da lista em cache (sem novas chamadas de API).
   const handleFilterAssets = () => {
     const [minPrice, maxPrice] = priceRange;
     if (minPrice > maxPrice) {
@@ -87,7 +79,6 @@ export default function CalculadoraScreen() {
 
     setIsLoading(true);
 
-    // Simula um pequeno atraso para o feedback visual de "Analisando..."
     setTimeout(() => {
       const priceFilteredList = fullAssetList
         .filter((asset) => asset.price >= minPrice && asset.price <= maxPrice)
@@ -113,7 +104,7 @@ export default function CalculadoraScreen() {
 
       setIsLoading(false);
       setWasCalculated(true);
-    }, 500); // Meio segundo de delay para UX
+    }, 500);
   };
 
   const renderResults = () => {
