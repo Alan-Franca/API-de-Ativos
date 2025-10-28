@@ -9,7 +9,7 @@ Este projeto é uma aplicação móvel desenvolvida com React Native e Expo que 
 
 ## 📜 Descrição
 
-A aplicação permite que o utilizador insira um valor máximo para o preço de uma cota. Com base nesse filtro, a aplicação busca em tempo real os ativos que se enquadram nesse critério, busca os seus detalhes (como Dividend Yield e logo) e, por fim, exibe os 100 melhores resultados, ordenados pelo maior Dividend Yield.
+A aplicação permite que o utilizador insira um valor máximo para o preço de uma cota. Com base nesse filtro, a aplicação busca em tempo real os ativos que se enquadram nesse critério, busca os seus detalhes (como Dividend Yield e logo) e, por fim, exibe os melhores resultados, ordenados pelo maior Dividend Yield.
 
 ## ✨ Funcionalidades
 
